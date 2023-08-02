@@ -42,6 +42,7 @@ export {
   json,
   MaxPartSizeExceededError,
   redirect,
+  redirectDocument,
   unstable_composeUploadHandlers,
   unstable_createMemoryUploadHandler,
   unstable_parseMultipartFormData,
