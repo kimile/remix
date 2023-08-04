@@ -63,7 +63,7 @@ describe("create-remix CLI", () => {
       args: ["--help"],
     });
     expect(stdout.trim()).toMatchInlineSnapshot(`
-      "create-remix  
+      "create-remix
 
       Usage:
 
@@ -208,6 +208,25 @@ describe("create-remix CLI", () => {
     expect(status).toBe(1);
     expect(fse.existsSync(path.join(notEmptyDir, "package.json"))).toBeFalsy();
     expect(fse.existsSync(path.join(notEmptyDir, "app/root.tsx"))).toBeFalsy();
+  });
+
+  it("allows non-empty directories when --allow-non-empty is specified", async () => {
+    let notEmptyDir = getProjectDir("non-interactive-not-empty-dir-allowed");
+    fse.mkdirSync(notEmptyDir);
+    fse.createFileSync(path.join(notEmptyDir, "some-file.txt"));
+
+    let { status, stderr, stdout } = await execCreateRemix({
+      args: [notEmptyDir, "--no-install", "--no-git-init", "--allow-non-empty"],
+      interactive: false,
+    });
+
+    expect(stdout).toMatch(
+      'Directory: Using non-empty directory "<TEMP_DIR>/non-interactive-not-empty-dir-allowed" as a project directory due to --allow-non-empty'
+    );
+    expect(stderr).toBe("");
+    expect(status).toBe(0);
+    expect(fse.existsSync(path.join(notEmptyDir, "package.json"))).toBeTruthy();
+    expect(fse.existsSync(path.join(notEmptyDir, "app/root.tsx"))).toBeTruthy();
   });
 
   it("works for GitHub username/repo combo", async () => {
