@@ -63,7 +63,7 @@ describe("create-remix CLI", () => {
       args: ["--help"],
     });
     expect(stdout.trim()).toMatchInlineSnapshot(`
-      "create-remix
+      "create-remix  
 
       Usage:
 
