@@ -220,7 +220,9 @@ describe("create-remix CLI", () => {
       interactive: false,
     });
 
-    expect(stdout).toMatch(
+    expect(
+      stdout.trim().replace("<TEMP_DIR>\\", "<TEMP_DIR>/") // Normalize Windows path
+    ).toMatch(
       'Directory: Using non-empty directory "<TEMP_DIR>/non-interactive-not-empty-dir-allowed" as a project directory due to --allow-non-empty'
     );
     expect(stderr).toBe("");
