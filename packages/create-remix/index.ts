@@ -220,7 +220,9 @@ async function projectNameStep(ctx: Context) {
     if (!cwdIsEmpty && !ctx.allowNonEmpty) {
       error(
         "Oh no!",
-        `Project directory "${color.reset(ctx.cwd)}" is not empty`
+        `Project directory "${color.reset(ctx.cwd)}" is not empty. ` +
+          "Please use the `--allow-non-empty` flag if you wish to write " +
+          "your app into this directory."
       );
       throw new Error("Project directory is not empty");
     }
@@ -242,7 +244,10 @@ async function projectNameStep(ctx: Context) {
         " as a project directory due to --allow-non-empty",
       ]);
     } else {
-      info("Hmm...", [color.reset(`"${ctx.cwd}"`), " is not empty!"]);
+      info("Hmm...", [
+        color.reset(`"${ctx.cwd}"`),
+        " is not empty!  Did you mean to use the `--allow-non-empty` flag?",
+      ]);
     }
   }
 
